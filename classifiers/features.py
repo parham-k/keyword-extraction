@@ -54,7 +54,7 @@ def features_train(train, keywords):
 
     # Calculate scores (posterior prob, tf-idf)
     n = len(train.index)
-    for kw in keywords.keys():
+    for kw in list(keywords.keys()):
         keywords[kw].setdefault('title', 0)
         keywords[kw].setdefault('both', 0)
         keywords[kw].setdefault('tag', 0)

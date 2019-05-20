@@ -11,14 +11,15 @@ Heuristics: #Tags >= 1, 'tag-dash-kws' == 'tag dash kws', c#<br />
 
 ### Instructions
 
-1. Clone repository
-2. Create virtual environment `virtualenv env`
-3. Install required libraries `pip install -r requirements.txt`
-4. Download `Train.zip` from the [Kaggle site](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction/data) to local folder `data`
-5. Split training data into new train and test files using `split_data.py` - creates train and test csvs (94 sec)
-6. Train models using `train.py` - creates json models in `classifiers/` (161 sec)
-7. Generate predictions using `predict.py` - creates prediction csv `data/Pred.csv`
-8. Evaluate predictions using `evaluate.py` - outputs mean precision, recall, and F1 score
+0. Clone repository
+0. Create virtual environment `virtualenv env`
+0. Install required libraries `pip install -r requirements.txt`
+0. Download NLTK resources using `load_nltk.py`
+0. Download `Train.zip` from the [Kaggle site](https://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction/data) to local folder `data`
+0. Split training data into new train and test files using `split_data.py` - creates train and test csvs (94 sec)
+0. Train models using `train.py` - creates json models in `classifiers/` (161 sec)
+0. Generate predictions using `predict.py` - creates prediction csv `data/Pred.csv`
+0. Evaluate predictions using `evaluate.py` - outputs mean precision, recall, and F1 score
 
 #### Notes
 
