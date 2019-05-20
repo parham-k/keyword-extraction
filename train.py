@@ -9,9 +9,12 @@ from classifiers.features import features_train
 
 
 def parse():
-    parser = argparse.ArgumentParser(description='Generate prediction models from training data and output results to json.')
+    parser = argparse.ArgumentParser(
+        description='Generate prediction models from training data and output results to json.'
+    )
     parser.add_argument('-t', metavar='path_to_file', default='data/Train.csv', help='specify Train csv file')
     return parser.parse_args()
+
 
 def main():
     args = parse()
@@ -24,7 +27,8 @@ def main():
     keywords = features_train(train, keywords)
     save_model('keywords', keywords)
 
+
 if __name__ == '__main__':
     start = time.time()
     main()
-    print 'Program runtime: {0:.3f}s'.format(time.time() - start)
+    print('Program runtime: {0:.3f}s'.format(time.time() - start))

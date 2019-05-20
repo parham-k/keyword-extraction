@@ -7,11 +7,10 @@ import pandas as pd
 import numpy as np
 import nltk
 
-from features import get_unused_puncs
+from .features import get_unused_puncs
 
 
 def decision_rule(title_kws, keywords, stopwords):
-
     # Get scores of each whole kw in title
     nb_scores = {}
     ti_scores = {}
@@ -31,7 +30,7 @@ def decision_rule(title_kws, keywords, stopwords):
     for kw in sorted(nb_scores, key=nb_scores.get, reverse=True):
         if nb_scores[kw] >= 0.5:
             kws_to_tag.append(kw)
-    
+
     # 2. Add highest scoring tf-idf kw if not already added
     for kw in sorted(ti_scores, key=ti_scores.get, reverse=True):
         if kw not in kws_to_tag:
@@ -44,15 +43,18 @@ def decision_rule(title_kws, keywords, stopwords):
 
     return kws_to_tag
 
-def nb_classify(test, keywords):
 
+def nb_classify(test, keywords):
     # Clean and tokenize titles
     unused_puncs = get_unused_puncs(keywords.keys())
     stopwords = nltk.corpus.stopwords.words('english')
-    test['Title'] = test['Title'].str.lower().replace(unused_puncs, ' ').str.split(' ').map(lambda x: list(set(x).difference(stopwords)))
-    
+    test['Title'] = test['Title'].str.lower().replace(unused_puncs, ' ').str.split(' ').map(
+        lambda x: list(set(x).difference(stopwords))
+    )
+
     # Generate predicted tags based on decision rule
     pred = test[['Id']]
-    pred['Tags'] = pd.Series(test['Title'].map(lambda x: decision_rule(x, keywords, stopwords)).map(lambda x: ' '.join(x)))
+    pred['Tags'] = pd.Series(
+        test['Title'].map(lambda x: decision_rule(x, keywords, stopwords)).map(lambda x: ' '.join(x)))
 
     return pred

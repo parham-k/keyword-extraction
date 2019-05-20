@@ -15,24 +15,17 @@ def get_unused_puncs(kws):
     puncs = re.compile('[' + ''.join(puncs) + ']')
     return puncs
 
-# Takes too long
-# def tokenize(text):
-#     text = nltk.word_tokenize(unicode(text, 'utf-8'))
-#     text = nltk.pos_tag(text)
-#     text = filter(lambda x: x[1] == 'NN', text)
-#     text = [kw[0] for kw in text]
-    
-#     return text
 
 def features_train(train, keywords):
-
     # Clean tags and titles
     train['Tags'] = train['Tags'].str.lower().str.split(' ')
     known_kws = np.hstack(train['Tags'].values)
     known_kws = np.unique(known_kws)
     unused_puncs = get_unused_puncs(known_kws)
     stopwords = nltk.corpus.stopwords.words('english')
-    train['Title'] = train['Title'].str.lower().replace(unused_puncs, ' ').str.split(' ').map(lambda x: list(set(x).difference(stopwords)))
+    train['Title'] = train['Title'].str.lower().replace(unused_puncs, ' ').str.split(' ').map(
+        lambda x: list(set(x).difference(stopwords))
+    )
 
     # Extract features
     for title_kws, tag_kws in zip(train['Title'], train['Tags']):
@@ -50,7 +43,7 @@ def features_train(train, keywords):
             keywords.setdefault(kw, {})
             keywords[kw].setdefault('tag', 0)
             keywords[kw]['tag'] += 1
-        
+
         # 2. Feature: existence of all parts of known kw
         for kw in tag_kws:
             if '-' in kw:

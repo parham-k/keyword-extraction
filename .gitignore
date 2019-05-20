@@ -12,3 +12,5 @@ data
 .Python
 *.ipynb*
 *.json
+.idea/
+venv/
